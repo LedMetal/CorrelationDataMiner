@@ -226,6 +226,7 @@
             this.btnBrowseSig2.TabIndex = 8;
             this.btnBrowseSig2.Text = "Browse";
             this.btnBrowseSig2.UseVisualStyleBackColor = true;
+            this.btnBrowseSig2.Click += new System.EventHandler(this.btnBrowseSig2_Click);
             // 
             // tbSig2Path
             // 
@@ -252,6 +253,7 @@
             this.btnBrowseSig1.TabIndex = 5;
             this.btnBrowseSig1.Text = "Browse";
             this.btnBrowseSig1.UseVisualStyleBackColor = true;
+            this.btnBrowseSig1.Click += new System.EventHandler(this.btnBrowseSig1_Click);
             // 
             // tbSig1Path
             // 
@@ -278,6 +280,7 @@
             this.btnBrowseCorr.TabIndex = 2;
             this.btnBrowseCorr.Text = "Browse";
             this.btnBrowseCorr.UseVisualStyleBackColor = true;
+            this.btnBrowseCorr.Click += new System.EventHandler(this.btnBrowseCorr_Click);
             // 
             // tbCorrPath
             // 
