@@ -102,6 +102,11 @@ namespace CorrelationDataMiner
         // Read and store files into global list of Frame objects
         private void ReadFiles()
         {
+            ReadCorrelationFile();
+        }
+
+        private void ReadCorrelationFile()
+        {
             // Open StreamReader object for correlation file
             using (StreamReader reader = new StreamReader(correlationFile))
             {
@@ -118,7 +123,6 @@ namespace CorrelationDataMiner
                     framesList.Add(new Frame() { Position = position, CorrSignal = Convert.ToDouble(line) });
                 }
             }
-
         }
 
     }
