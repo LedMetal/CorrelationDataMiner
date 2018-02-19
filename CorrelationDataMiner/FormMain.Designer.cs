@@ -278,6 +278,7 @@
             this.btnBrowseCorr.TabIndex = 2;
             this.btnBrowseCorr.Text = "Browse";
             this.btnBrowseCorr.UseVisualStyleBackColor = true;
+            this.btnBrowseCorr.Click += new System.EventHandler(this.btnBrowseCorr_Click);
             // 
             // tbCorrPath
             // 
