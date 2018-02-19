@@ -226,6 +226,7 @@
             this.btnBrowseSig2.TabIndex = 8;
             this.btnBrowseSig2.Text = "Browse";
             this.btnBrowseSig2.UseVisualStyleBackColor = true;
+            this.btnBrowseSig2.Click += new System.EventHandler(this.btnBrowseSig2_Click);
             // 
             // tbSig2Path
             // 

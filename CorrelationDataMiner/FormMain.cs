@@ -72,5 +72,26 @@ namespace CorrelationDataMiner
             }
         }
 
+        private void btnBrowseSig2_Click(object sender, EventArgs e)
+        {
+            // Create OpenFileDialog object to select signal two file
+            OpenFileDialog fileDialog = new OpenFileDialog()
+            {
+                Title = "Select Signal 2 File...",
+                Filter = "TXT Files|*.txt",
+                InitialDirectory = @"C:\"
+            };
+
+            // Display fileDialog and check if user selected a file
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                // Save selected file's path
+                signalTwoFile = fileDialog.FileName;
+
+                // Display file path in read-only textbox
+                tbSig2Path.Text = signalTwoFile;
+            }
+        }
+
     }
 }
