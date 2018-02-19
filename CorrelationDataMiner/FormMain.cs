@@ -97,6 +97,7 @@ namespace CorrelationDataMiner
         private void btnCalculateIntervals_Click(object sender, EventArgs e)
         {
             ReadFiles();
+            SetCorrelationRequirement();
         }
 
         // Read and store files into global list of Frame objects
@@ -166,6 +167,30 @@ namespace CorrelationDataMiner
 
                     // Increment position variable
                     position++;
+                }
+            }
+        }
+
+        // Calculate correlation signal requirement and flag Frame objects that meet it
+        private void SetCorrelationRequirement()
+        {
+            // Read requirement from numberUpDown tool
+            double percentileCorrelation = Convert.ToDouble(nudCorrelation.Value / 100);
+
+            // Check if user has entered a value for correlation signal percentile
+            if (percentileCorrelation == 0)
+            {
+                MessageBox.Show("No percentile value entered for correlation signal requirement", "Missing Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                // Sort frames list by correlation signal in descending order
+                framesList.Sort((x, y) => y.CorrSignal.CompareTo(x.CorrSignal));
+
+                // Flag top percentile, defined by user
+                for (int i = 0; i < (framesList.Count * percentileCorrelation); i++)
+                {
+                    framesList[i].MeetsCSReq = true;
                 }
             }
         }
