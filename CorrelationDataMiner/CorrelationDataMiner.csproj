@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="bus\Frame.cs" />
+    <Compile Include="bus\Interval.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
