@@ -252,6 +252,7 @@
             this.btnBrowseSig1.TabIndex = 5;
             this.btnBrowseSig1.Text = "Browse";
             this.btnBrowseSig1.UseVisualStyleBackColor = true;
+            this.btnBrowseSig1.Click += new System.EventHandler(this.btnBrowseSig1_Click);
             // 
             // tbSig1Path
             // 

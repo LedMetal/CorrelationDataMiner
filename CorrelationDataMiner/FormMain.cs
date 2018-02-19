@@ -22,7 +22,7 @@ namespace CorrelationDataMiner
         {
             InitializeComponent();
 
-            // Initialize global lists
+            // Initialize global variables
             correlationFile = "";
             signalOneFile = "";
             signalTwoFile = "";
@@ -49,7 +49,27 @@ namespace CorrelationDataMiner
                 // Display file path in read-only textbox
                 tbCorrPath.Text = correlationFile;
             }
+        }
 
+        private void btnBrowseSig1_Click(object sender, EventArgs e)
+        {
+            // Create OpenFileDialog object to select signal one file
+            OpenFileDialog fileDialog = new OpenFileDialog()
+            {
+                Title = "Select Signal 1 File...",
+                Filter = "TXT Files|*.txt",
+                InitialDirectory = @"C:\"
+            };
+
+            // Display fileDialog and check if user selected a file
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                // Save selected file's path
+                signalOneFile = fileDialog.FileName;
+
+                // Display file path in read-only textbox
+                tbSig1Path.Text = signalOneFile;
+            }
         }
 
     }
