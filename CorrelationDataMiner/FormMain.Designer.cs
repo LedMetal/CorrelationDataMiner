@@ -32,10 +32,10 @@
             this.btnCalculateIntervals = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
             this.gbRequirements = new System.Windows.Forms.GroupBox();
-            this.nudSignal2 = new System.Windows.Forms.NumericUpDown();
+            this.nudSignalTwo = new System.Windows.Forms.NumericUpDown();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.nudSignal1 = new System.Windows.Forms.NumericUpDown();
+            this.nudSignalOne = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.nudCorrelation = new System.Windows.Forms.NumericUpDown();
@@ -53,8 +53,8 @@
             this.tbCorrPath = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.gbRequirements.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudSignal2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudSignal1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSignalTwo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSignalOne)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCorrelation)).BeginInit();
             this.gbFilesSelection.SuspendLayout();
             this.SuspendLayout();
@@ -93,10 +93,10 @@
             // 
             // gbRequirements
             // 
-            this.gbRequirements.Controls.Add(this.nudSignal2);
+            this.gbRequirements.Controls.Add(this.nudSignalTwo);
             this.gbRequirements.Controls.Add(this.label9);
             this.gbRequirements.Controls.Add(this.label10);
-            this.gbRequirements.Controls.Add(this.nudSignal1);
+            this.gbRequirements.Controls.Add(this.nudSignalOne);
             this.gbRequirements.Controls.Add(this.label7);
             this.gbRequirements.Controls.Add(this.label8);
             this.gbRequirements.Controls.Add(this.nudCorrelation);
@@ -109,12 +109,12 @@
             this.gbRequirements.TabStop = false;
             this.gbRequirements.Text = "2. Requirements";
             // 
-            // nudSignal2
+            // nudSignalTwo
             // 
-            this.nudSignal2.Location = new System.Drawing.Point(90, 80);
-            this.nudSignal2.Name = "nudSignal2";
-            this.nudSignal2.Size = new System.Drawing.Size(60, 20);
-            this.nudSignal2.TabIndex = 8;
+            this.nudSignalTwo.Location = new System.Drawing.Point(90, 80);
+            this.nudSignalTwo.Name = "nudSignalTwo";
+            this.nudSignalTwo.Size = new System.Drawing.Size(60, 20);
+            this.nudSignalTwo.TabIndex = 8;
             // 
             // label9
             // 
@@ -136,12 +136,12 @@
             this.label10.TabIndex = 6;
             this.label10.Text = "Percentile of Signal 2 Data";
             // 
-            // nudSignal1
+            // nudSignalOne
             // 
-            this.nudSignal1.Location = new System.Drawing.Point(90, 54);
-            this.nudSignal1.Name = "nudSignal1";
-            this.nudSignal1.Size = new System.Drawing.Size(60, 20);
-            this.nudSignal1.TabIndex = 5;
+            this.nudSignalOne.Location = new System.Drawing.Point(90, 54);
+            this.nudSignalOne.Name = "nudSignalOne";
+            this.nudSignalOne.Size = new System.Drawing.Size(60, 20);
+            this.nudSignalOne.TabIndex = 5;
             // 
             // label7
             // 
@@ -311,8 +311,8 @@
             this.Text = "Correlation Data Miner";
             this.gbRequirements.ResumeLayout(false);
             this.gbRequirements.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudSignal2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudSignal1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSignalTwo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSignalOne)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCorrelation)).EndInit();
             this.gbFilesSelection.ResumeLayout(false);
             this.gbFilesSelection.PerformLayout();
@@ -327,10 +327,10 @@
         private System.Windows.Forms.Button btnCalculateIntervals;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.GroupBox gbRequirements;
-        private System.Windows.Forms.NumericUpDown nudSignal2;
+        private System.Windows.Forms.NumericUpDown nudSignalTwo;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.NumericUpDown nudSignal1;
+        private System.Windows.Forms.NumericUpDown nudSignalOne;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.NumericUpDown nudCorrelation;
