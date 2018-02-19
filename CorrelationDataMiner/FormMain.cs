@@ -104,6 +104,7 @@ namespace CorrelationDataMiner
         {
             ReadCorrelationFile();
             ReadSignalOneFile();
+            ReadSignalTwoFile();
         }
 
         // Read correlation signal file and store into newly created Frame object
