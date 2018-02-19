@@ -194,11 +194,11 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(46, 16);
+            this.label4.Location = new System.Drawing.Point(70, 16);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(340, 31);
+            this.label4.Size = new System.Drawing.Size(286, 31);
             this.label4.TabIndex = 37;
-            this.label4.Text = "Correlation Signal Intervals";
+            this.label4.Text = "Correlation Data Miner";
             // 
             // gbFilesSelection
             // 
