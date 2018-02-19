@@ -80,6 +80,7 @@
             this.btnCalculateIntervals.TabIndex = 40;
             this.btnCalculateIntervals.Text = "Calculate Intervals";
             this.btnCalculateIntervals.UseVisualStyleBackColor = false;
+            this.btnCalculateIntervals.Click += new System.EventHandler(this.btnCalculateIntervals_Click);
             // 
             // label18
             // 
