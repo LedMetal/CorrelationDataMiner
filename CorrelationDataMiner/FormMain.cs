@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -72,6 +73,11 @@ namespace CorrelationDataMiner
             }
         }
 
+        private void btnCalculateIntervals_Click(object sender, EventArgs e)
+        {
+            ReadFiles();
+        }
+
         private void btnBrowseSig2_Click(object sender, EventArgs e)
         {
             // Create OpenFileDialog object to select signal two file
@@ -91,6 +97,28 @@ namespace CorrelationDataMiner
                 // Display file path in read-only textbox
                 tbSig2Path.Text = signalTwoFile;
             }
+        }
+
+        // Read and store files into global list of Frame objects
+        private void ReadFiles()
+        {
+            // Open StreamReader object for correlation file
+            using (StreamReader reader = new StreamReader(correlationFile))
+            {
+                string line = "";
+                int position = 0;
+
+                // Loop through all lines that are not read as null
+                while ((line = reader.ReadLine()) != null)
+                {
+                    // Increment position variable
+                    position++;
+
+                    // Add new frame object to global list, saving the frame's position and correlation signal
+                    framesList.Add(new Frame() { Position = position, CorrSignal = Convert.ToDouble(line) });
+                }
+            }
+
         }
 
     }
