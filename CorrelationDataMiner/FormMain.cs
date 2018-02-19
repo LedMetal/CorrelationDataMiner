@@ -148,5 +148,26 @@ namespace CorrelationDataMiner
             }
         }
 
+        // Read signal two file and store into frame object at appropriate position
+        private void ReadSignalTwoFile()
+        {
+            // Open StreamReader object for signal two file
+            using (StreamReader reader = new StreamReader(signalTwoFile))
+            {
+                string line = "";
+                int position = 0;
+
+                // Loop through all lines that are not read as null
+                while ((line = reader.ReadLine()) != null)
+                {
+                    // Use position variable as index to find corresponding frame and store signal two value
+                    framesList[position].SigTwo = Convert.ToDouble(line);
+
+                    // Increment position variable
+                    position++;
+                }
+            }
+        }
+
     }
 }
