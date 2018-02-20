@@ -96,7 +96,26 @@ namespace CorrelationDataMiner
 
         private void btnCalculateIntervals_Click(object sender, EventArgs e)
         {
-            ReadFiles();
+            // Check if any file was left un-selected or any percentile left without an input
+            if ((tbCorrPath.Text == String.Empty) || (tbSig1Path.Text == String.Empty) || (tbSig2Path.Text == String.Empty))
+            {
+                MessageBox.Show("Please make sure to select all three files using the corresponding 'Browse' button", "Missing File(s)", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else if ((nudCorrelation.Value == 0) || (nudSignalOne.Value == 0) || (nudSignalTwo.Value == 0))
+            {
+                MessageBox.Show("Please input a top percentile value for each data file", "Missing Field", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                // Read files into global frames list
+                ReadFiles();
+
+                // Flag frames that meet correlation, signal one and signal two requirements
+                SetCorrelationRequirement();
+                SetSignalOneRequirement();
+                SetSignalTwoRequirement();
+            }
+
         }
 
         // Read and store files into global list of Frame objects
@@ -166,6 +185,78 @@ namespace CorrelationDataMiner
 
                     // Increment position variable
                     position++;
+                }
+            }
+        }
+
+        // Calculate correlation signal requirement and flag Frame objects that meet it
+        private void SetCorrelationRequirement()
+        {
+            // Read requirement from numberUpDown tool
+            double percentileCorrelation = Convert.ToDouble(nudCorrelation.Value / 100);
+
+            // Check if user has entered a value for correlation signal percentile
+            if (percentileCorrelation == 0)
+            {
+                MessageBox.Show("No percentile value entered for correlation signal requirement", "Missing Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                // Sort frames list by correlation signal in descending order
+                framesList.Sort((x, y) => y.CorrSignal.CompareTo(x.CorrSignal));
+
+                // Flag top percentile, defined by user
+                for (int i = 0; i < (framesList.Count * percentileCorrelation); i++)
+                {
+                    framesList[i].MeetsCSReq = true;
+                }
+            }
+        }
+
+        // Calculate signal one requirement and flag Frame objects that meet it
+        private void SetSignalOneRequirement()
+        {
+            // Read requirement from numberUpDown tool
+            double percentileSignalOne = Convert.ToDouble(nudSignalOne.Value / 100);
+
+            // Check if user has entered a value for signal one percentile
+            if (percentileSignalOne == 0)
+            {
+                MessageBox.Show("No percentile value entered for signal one requirement", "Missing Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                // Sort frames list by signal one in descending order
+                framesList.Sort((x, y) => y.SigOne.CompareTo(x.SigOne));
+
+                // Flag top percentile, defined by user
+                for (int i = 0; i < (framesList.Count * percentileSignalOne); i++)
+                {
+                    framesList[i].MeetsS1Req = true;
+                }
+            }
+        }
+
+        // Calculate signal one requirement and flag Frame objects that meet it
+        private void SetSignalTwoRequirement()
+        {
+            // Read requirement from numberUpDown tool
+            double percentileSignalTwo = Convert.ToDouble(nudSignalTwo.Value / 100);
+
+            // Check if user has entered a value for signal two percentile
+            if (percentileSignalTwo == 0)
+            {
+                MessageBox.Show("No percentile value entered for signal two requirement", "Missing Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                // Sort frames list by signal two in descending order
+                framesList.Sort((x, y) => y.SigTwo.CompareTo(x.SigTwo));
+
+                // Flag top percentile, defined by user
+                for (int i = 0; i < (framesList.Count * percentileSignalTwo); i++)
+                {
+                    framesList[i].MeetsS2Req = true;
                 }
             }
         }
