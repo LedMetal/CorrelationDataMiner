@@ -17,6 +17,13 @@ namespace CorrelationDataMiner.bus
             this.intervalLength = 0;
         }
 
+        public Interval(int firstIndex, int lastIndex)
+        {
+            this.firstPosition = firstIndex + 1;
+            this.lastPosition = lastIndex + 1;
+            CalculateIntervalLength();
+        }
+
         // Calculates the length of the interval
         public void CalculateIntervalLength()
         {
