@@ -9,12 +9,14 @@ namespace CorrelationDataMiner.bus
     public class Interval
     {
         int firstPosition, lastPosition, intervalLength;
+        double averageCorrelation;
 
         public Interval()
         {
             this.firstPosition = 0;
             this.lastPosition = 0;
             this.intervalLength = 0;
+            this.averageCorrelation = 0.0d;
         }
 
         public Interval(int firstIndex, int lastIndex)
@@ -28,6 +30,13 @@ namespace CorrelationDataMiner.bus
         public void CalculateIntervalLength()
         {
             this.intervalLength = (this.lastPosition + 1) - this.firstPosition;
+        }
+
+        // Calculate Average Correlation
+        public void CalculateAverageCorrelation(List<Frame> framesList)
+        {
+            // Find the average correlation from the interval range
+            this.averageCorrelation = framesList.GetRange(this.firstPosition, this.intervalLength).Average(x => x.CorrSignal);
         }
 
         /*--------------------------------------------------------------------------------------------*/
