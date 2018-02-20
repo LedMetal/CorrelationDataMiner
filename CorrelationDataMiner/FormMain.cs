@@ -99,6 +99,7 @@ namespace CorrelationDataMiner
             ReadFiles();
             SetCorrelationRequirement();
             SetSignalOneRequirement();
+            SetSignalTwoRequirement();
         }
 
         // Read and store files into global list of Frame objects
@@ -202,7 +203,7 @@ namespace CorrelationDataMiner
             // Read requirement from numberUpDown tool
             double percentileSignalOne = Convert.ToDouble(nudSignalOne.Value / 100);
 
-            // Check if user has entered a value for correlation signal percentile
+            // Check if user has entered a value for signal one percentile
             if (percentileSignalOne == 0)
             {
                 MessageBox.Show("No percentile value entered for signal one requirement", "Missing Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -216,6 +217,30 @@ namespace CorrelationDataMiner
                 for (int i = 0; i < (framesList.Count * percentileSignalOne); i++)
                 {
                     framesList[i].MeetsS1Req = true;
+                }
+            }
+        }
+
+        // Calculate signal one requirement and flag Frame objects that meet it
+        private void SetSignalTwoRequirement()
+        {
+            // Read requirement from numberUpDown tool
+            double percentileSignalTwo = Convert.ToDouble(nudSignalTwo.Value / 100);
+
+            // Check if user has entered a value for signal two percentile
+            if (percentileSignalTwo == 0)
+            {
+                MessageBox.Show("No percentile value entered for signal two requirement", "Missing Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                // Sort frames list by signal two in descending order
+                framesList.Sort((x, y) => y.SigTwo.CompareTo(x.SigTwo));
+
+                // Flag top percentile, defined by user
+                for (int i = 0; i < (framesList.Count * percentileSignalTwo); i++)
+                {
+                    framesList[i].MeetsS2Req = true;
                 }
             }
         }
