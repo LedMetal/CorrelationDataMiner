@@ -286,6 +286,9 @@ namespace CorrelationDataMiner
                     {
                         // Create Interval object
                         Interval interval = new Interval(firstIndex, firstIndex);
+                        interval.CalculateAverageCorrelation(framesList);
+                        interval.CalculateAverageSignalOne(framesList);
+                        interval.CalculateAverageSignalTwo(framesList);
 
                         // Add interval to intervalsList
                         intervalsList.Add(interval);
@@ -305,6 +308,9 @@ namespace CorrelationDataMiner
                                 {
                                     // Create Interval
                                     Interval interval = new Interval(firstIndex, lastIndex);
+                                    interval.CalculateAverageCorrelation(framesList);
+                                    interval.CalculateAverageSignalOne(framesList);
+                                    interval.CalculateAverageSignalTwo(framesList);
 
                                     // Add interval to intervalsList
                                     intervalsList.Add(interval);
@@ -319,9 +325,18 @@ namespace CorrelationDataMiner
                             {
                                 // Create Interval object
                                 Interval interval = new Interval(firstIndex, (lastIndex - 1));
+                                interval.CalculateAverageCorrelation(framesList);
+                                interval.CalculateAverageSignalOne(framesList);
+                                interval.CalculateAverageSignalTwo(framesList);
 
                                 // Add interval to intervalsList
                                 intervalsList.Add(interval);
+
+                                // Move firstIndex to the next index after this newly created interval
+                                firstIndex = lastIndex + 1;
+
+                                // Break out of the loop of finding the (already found) lastIndex
+                                break;
                             }
 
                         } while (lastIndex < framesList.Count);
