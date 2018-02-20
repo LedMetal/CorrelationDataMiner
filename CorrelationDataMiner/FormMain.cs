@@ -114,6 +114,9 @@ namespace CorrelationDataMiner
                 SetCorrelationRequirement();
                 SetSignalOneRequirement();
                 SetSignalTwoRequirement();
+
+                // Calculate Intervals
+                CalculateIntervals();
             }
 
         }
@@ -259,6 +262,94 @@ namespace CorrelationDataMiner
                     framesList[i].MeetsS2Req = true;
                 }
             }
+        }
+
+        // Calculate intervals in which all three flags on a Frame are set to true
+        private void CalculateIntervals()
+        {
+            // firstIndex variable represents the first index in an interval of consequtive frames that meet all three requirements
+            int firstIndex = 0;
+            int lastIndex = 0;
+
+            // Re-arrange global list of Frames by position, in ascending order
+            framesList.Sort((x, y) => x.Position.CompareTo(y.Position));
+
+            do
+            {
+                // Check if frame at firstIndex meets all three requirements
+                if (framesList[firstIndex].MeetsCSReq && framesList[firstIndex].MeetsS1Req && framesList[firstIndex].MeetsS2Req)
+                {
+                    /*-------------------------------------firstIndex FOUND-------------------------------------*/
+
+                    // Check if this firstIndex found is the last one in the list
+                    if (firstIndex == (framesList.Count - 1))
+                    {
+                        // Create Interval object
+                        Interval interval = new Interval(firstIndex, firstIndex);
+                        interval.CalculateAverageCorrelation(framesList);
+                        interval.CalculateAverageSignalOne(framesList);
+                        interval.CalculateAverageSignalTwo(framesList);
+
+                        // Add interval to intervalsList
+                        intervalsList.Add(interval);
+                    }
+                    else
+                    {
+                        // Move to the next index in search for interval end
+                        lastIndex = firstIndex + 1;
+
+                        do
+                        {
+                            // Check if frame at lastIndex meets all three requirements
+                            if (framesList[lastIndex].MeetsCSReq && framesList[lastIndex].MeetsS1Req && framesList[lastIndex].MeetsS2Req)
+                            {
+                                // Check if frame at lastIndex is the last frame in list
+                                if (lastIndex == (framesList.Count - 1))
+                                {
+                                    // Create Interval
+                                    Interval interval = new Interval(firstIndex, lastIndex);
+                                    interval.CalculateAverageCorrelation(framesList);
+                                    interval.CalculateAverageSignalOne(framesList);
+                                    interval.CalculateAverageSignalTwo(framesList);
+
+                                    // Add interval to intervalsList
+                                    intervalsList.Add(interval);
+                                }
+                                else
+                                {
+                                    // Increment lastIndex
+                                    lastIndex++;
+                                }
+                            }
+                            else
+                            {
+                                // Create Interval object
+                                Interval interval = new Interval(firstIndex, (lastIndex - 1));
+                                interval.CalculateAverageCorrelation(framesList);
+                                interval.CalculateAverageSignalOne(framesList);
+                                interval.CalculateAverageSignalTwo(framesList);
+
+                                // Add interval to intervalsList
+                                intervalsList.Add(interval);
+
+                                // Move firstIndex to the next index after this newly created interval
+                                firstIndex = lastIndex + 1;
+
+                                // Break out of the loop of finding the (already found) lastIndex
+                                break;
+                            }
+
+                        } while (lastIndex < framesList.Count);
+                    }
+                }
+                else
+                {
+                    // Increment firstIndex
+                    firstIndex++;
+                }
+
+            } while (firstIndex < framesList.Count);
+
         }
 
     }
