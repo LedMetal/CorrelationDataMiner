@@ -51,6 +51,13 @@ namespace CorrelationDataMiner.bus
             this.averageSignalOne = framesList.GetRange(this.firstPosition, this.intervalLength).Average(x => x.SigOne);
         }
 
+        // Calculate Average Signal Two
+        public void CalculateAverageSignalTwo(List<Frame> framesList)
+        {
+            // Find the average signal two from the interval range
+            this.averageSignalTwo = framesList.GetRange(this.firstPosition, this.intervalLength).Average(x => x.SigTwo);
+        }
+
         /*--------------------------------------------------------------------------------------------*/
 
         public int FirstPosition { get => firstPosition; set => firstPosition = value; }
