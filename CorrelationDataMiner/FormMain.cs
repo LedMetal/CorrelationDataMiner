@@ -267,9 +267,36 @@ namespace CorrelationDataMiner
         // Calculate intervals in which all three flags on a Frame are set to true
         private void CalculateIntervals()
         {
+            // firstIndex variable represents the first index in an interval of consequtive frames that meet all three requirements
+            int firstIndex = 0;
+
             // Re-arrange global list of Frames by position, in ascending order
             framesList.Sort((x, y) => x.Position.CompareTo(y.Position));
 
+            do
+            {
+                // Check if frame at index "firstIndex" meets all three requirements
+                if (framesList[firstIndex].MeetsCSReq && framesList[firstIndex].MeetsS1Req && framesList[firstIndex].MeetsS2Req)
+                {
+                    /*-------------------------------------firstIndex FOUND-------------------------------------*/
+
+                    // Check if this firstIndex found is the last one in the list
+                    if (firstIndex == (framesList.Count - 1))
+                    {
+                        // Create Interval object
+                    }
+                    else
+                    {
+                        // Go looking for end of interval
+                    }
+                }
+                else
+                {
+                    // Increment firstIndex
+                    firstIndex++;
+                }
+
+            } while (firstIndex < framesList.Count);
 
         }
 
