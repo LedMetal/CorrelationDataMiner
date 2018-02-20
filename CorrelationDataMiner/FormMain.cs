@@ -114,6 +114,9 @@ namespace CorrelationDataMiner
                 SetCorrelationRequirement();
                 SetSignalOneRequirement();
                 SetSignalTwoRequirement();
+
+                // Calculate Intervals
+                CalculateIntervals();
             }
 
         }
@@ -259,6 +262,15 @@ namespace CorrelationDataMiner
                     framesList[i].MeetsS2Req = true;
                 }
             }
+        }
+
+        // Calculate intervals in which all three flags on a Frame are set to true
+        private void CalculateIntervals()
+        {
+            // Re-arrange global list of Frames by position, in ascending order
+            framesList.Sort((x, y) => x.Position.CompareTo(y.Position));
+
+
         }
 
     }
