@@ -98,6 +98,7 @@ namespace CorrelationDataMiner
         {
             ReadFiles();
             SetCorrelationRequirement();
+            SetSignalOneRequirement();
         }
 
         // Read and store files into global list of Frame objects
@@ -191,6 +192,30 @@ namespace CorrelationDataMiner
                 for (int i = 0; i < (framesList.Count * percentileCorrelation); i++)
                 {
                     framesList[i].MeetsCSReq = true;
+                }
+            }
+        }
+
+        // Calculate signal one requirement and flag Frame objects that meet it
+        private void SetSignalOneRequirement()
+        {
+            // Read requirement from numberUpDown tool
+            double percentileSignalOne = Convert.ToDouble(nudSignalOne.Value / 100);
+
+            // Check if user has entered a value for correlation signal percentile
+            if (percentileSignalOne == 0)
+            {
+                MessageBox.Show("No percentile value entered for signal one requirement", "Missing Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                // Sort frames list by signal one in descending order
+                framesList.Sort((x, y) => y.SigOne.CompareTo(x.SigOne));
+
+                // Flag top percentile, defined by user
+                for (int i = 0; i < (framesList.Count * percentileSignalOne); i++)
+                {
+                    framesList[i].MeetsS1Req = true;
                 }
             }
         }
