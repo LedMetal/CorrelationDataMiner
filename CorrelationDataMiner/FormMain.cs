@@ -402,7 +402,7 @@ namespace CorrelationDataMiner
                 {
                     int temp = 0;
 
-                    writer.WriteLine("Interval".PadRight(10) + "First".PadRight(10) + "Last".PadRight(9) + "Length".PadRight(11) + "Avg Correlation".PadRight(20) + "Avg Signal One".PadRight(20) + "Avg Signal Two".PadRight(20) + "\n");
+                    writer.WriteLine("Interval".PadRight(10) + "First".PadRight(10) + "Last".PadRight(9) + "Length".PadRight(11) + "Avg Correlation".PadRight(20) + "Avg Signal One".PadRight(19) + "Avg Signal Two".PadRight(19) + "\n");
 
                     for (int i = 0; i < intervalsList.Count; i++)
                     {

@@ -63,6 +63,9 @@ namespace CorrelationDataMiner.bus
         public int FirstPosition { get => firstPosition; set => firstPosition = value; }
         public int LastPosition { get => lastPosition; set => lastPosition = value; }
         public int IntervalLength { get => intervalLength; set => intervalLength = value; }
+        public double AverageCorrelation { get => averageCorrelation; set => averageCorrelation = value; }
+        public double AverageSignalOne { get => averageSignalOne; set => averageSignalOne = value; }
+        public double AverageSignalTwo { get => averageSignalTwo; set => averageSignalTwo = value; }
     }
 
 }
