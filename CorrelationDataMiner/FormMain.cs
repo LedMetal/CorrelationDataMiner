@@ -358,7 +358,22 @@ namespace CorrelationDataMiner
         // Output Intervals to .xls file
         private void OutputExcel()
         {
-            
+            // Create Excel Application
+            Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
+
+            // Make sure that the current system has Excel installed on it
+            if (xlApp == null)
+            {
+                MessageBox.Show("Microsoft Excel is not properly installed on your current system.\n\nOutput file will be .txt", "Microsoft Excel Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                // Write to .txt file
+            }
+            else
+            {
+                MessageBox.Show("Microsoft Excel is recognized on your current system.\n\nOutput file will be .xls", "Microsoft Excel Found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Write to .xls file
+            }
         }
 
     }
