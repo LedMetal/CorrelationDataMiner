@@ -119,7 +119,7 @@ namespace CorrelationDataMiner
                 CalculateIntervals();
 
                 // Output Intervals to Excel spreadsheet
-                OutputExcel();
+                OutputIntervals();
             }
 
         }
@@ -355,25 +355,39 @@ namespace CorrelationDataMiner
 
         }
 
-        // Output Intervals to .xls file
-        private void OutputExcel()
+        // Output Intervals to separate file
+        private void OutputIntervals()
         {
             // Create Excel Application
             Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
 
-            // Make sure that the current system has Excel installed on it
+            // Check if the current system has Excel installed on it
             if (xlApp == null)
             {
                 MessageBox.Show("Microsoft Excel is not properly installed on your current system.\n\nOutput file will be .txt", "Microsoft Excel Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                 // Write to .txt file
+                OutputTXTFile();
             }
             else
             {
                 MessageBox.Show("Microsoft Excel is recognized on your current system.\n\nOutput file will be .xls", "Microsoft Excel Found", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Write to .xls file
+                OutputXLSFile();
             }
+        }
+
+        // Output to Text File
+        private void OutputTXTFile()
+        {
+
+        }
+
+        // Output to Excel File
+        private void OutputXLSFile()
+        {
+
         }
 
     }
