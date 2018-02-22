@@ -117,6 +117,9 @@ namespace CorrelationDataMiner
 
                 // Calculate Intervals
                 CalculateIntervals();
+
+                // Output Intervals to Excel spreadsheet
+                OutputExcel();
             }
 
         }
@@ -350,6 +353,12 @@ namespace CorrelationDataMiner
 
             } while (firstIndex < framesList.Count);
 
+        }
+
+        // Output Intervals to .xls file
+        private void OutputExcel()
+        {
+            
         }
 
     }
