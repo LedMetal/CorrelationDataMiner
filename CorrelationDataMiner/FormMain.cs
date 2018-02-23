@@ -475,8 +475,34 @@ namespace CorrelationDataMiner
 
                 // Create Worksheet
                 Worksheet xlWorksheet = xlWorkbook.Worksheets.Item[1];
-                xlWorksheet.Cells[3, 2] = "32";
-                xlWorksheet.Cells[2, 3] = "23";
+
+                // Set initial row and column values
+                int row = 1;
+                int col = 1;
+
+                // Write table headers
+                xlWorksheet.Cells[row, col] = "Interval"; col++;
+                xlWorksheet.Cells[row, col] = "First Position"; col++;
+                xlWorksheet.Cells[row, col] = "Last Position"; col++;
+                xlWorksheet.Cells[row, col] = "Interval Length"; col++;
+                xlWorksheet.Cells[row, col] = "Avg Correlation"; col++;
+                xlWorksheet.Cells[row, col] = "Avg Signal One"; col++;
+                xlWorksheet.Cells[row, col] = "Avg Signal Two"; col = 1; row++;
+
+                // Loop through intervalsList and display each line that has a length > 1
+                for (int i = 0; i < intervalsList.Count; i++)
+                {
+                    if (intervalsList[i].IntervalLength > 1)
+                    {
+                        xlWorksheet.Cells[row, col] = i + 1; col++;
+                        xlWorksheet.Cells[row, col] = intervalsList[i].FirstPosition; col++;
+                        xlWorksheet.Cells[row, col] = intervalsList[i].LastPosition; col++;
+                        xlWorksheet.Cells[row, col] = intervalsList[i].IntervalLength; col++;
+                        xlWorksheet.Cells[row, col] = Math.Round(intervalsList[i].AverageCorrelation, 5); col++;
+                        xlWorksheet.Cells[row, col] = Math.Round(intervalsList[i].AverageSignalOne, 5); col++;
+                        xlWorksheet.Cells[row, col] = Math.Round(intervalsList[i].AverageSignalTwo, 5); col = 1; row++;
+                    }
+                }
 
                 // Save Workbook
                 xlWorkbook.SaveAs(saveFileDialog.FileName, XlFileFormat.xlWorkbookNormal, missValue, missValue, missValue, missValue, XlSaveAsAccessMode.xlExclusive, missValue, missValue, missValue, missValue, missValue);
