@@ -109,5 +109,10 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="sample_data\CorrelationSignal_SAMPLE.txt" />
+    <Content Include="sample_data\Signal1Motion_SAMPLE.txt" />
+    <Content Include="sample_data\Signal2Motion_SAMPLE.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
