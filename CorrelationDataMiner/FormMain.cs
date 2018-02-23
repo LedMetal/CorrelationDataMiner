@@ -1,4 +1,5 @@
 ﻿using CorrelationDataMiner.bus;
+using Microsoft.Office.Interop.Excel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,6 +18,7 @@ namespace CorrelationDataMiner
     {
         // Global Variables
         string correlationFile, signalOneFile, signalTwoFile;
+        string lastDirectory;
         List<Frame> framesList;
         List<Interval> intervalsList;
 
@@ -29,6 +32,7 @@ namespace CorrelationDataMiner
             signalTwoFile = "";
             framesList = new List<Frame>();
             intervalsList = new List<Interval>();
+            lastDirectory = "";
         }
 
         private void btnBrowseCorr_Click(object sender, EventArgs e)
@@ -37,13 +41,25 @@ namespace CorrelationDataMiner
             OpenFileDialog fileDialog = new OpenFileDialog()
             {
                 Title = "Select Correlation File...",
-                Filter = "TXT Files|*.txt",
-                InitialDirectory = @"C:\"
+                Filter = "TXT Files|*.txt"
             };
+
+            // Check if there is a value set for lastDirectory (ie. a different file has been selected)
+            if (lastDirectory != "")
+            {
+                fileDialog.InitialDirectory = lastDirectory;
+            }
+            else
+            {
+                fileDialog.InitialDirectory = @"C:\";
+            }
 
             // Display fileDialog and check if user selected a file
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
+                // Save the directory found, to use it for the next fileDialog
+                lastDirectory = Path.GetDirectoryName(fileDialog.FileName);
+
                 // Save selected file's path
                 correlationFile = fileDialog.FileName;
 
@@ -58,13 +74,25 @@ namespace CorrelationDataMiner
             OpenFileDialog fileDialog = new OpenFileDialog()
             {
                 Title = "Select Signal 1 File...",
-                Filter = "TXT Files|*.txt",
-                InitialDirectory = @"C:\"
+                Filter = "TXT Files|*.txt"
             };
+
+            // Check if there is a value set for lastDirectory (ie. a different file has been selected)
+            if (lastDirectory != "")
+            {
+                fileDialog.InitialDirectory = lastDirectory;
+            }
+            else
+            {
+                fileDialog.InitialDirectory = @"C:\";
+            }
 
             // Display fileDialog and check if user selected a file
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
+                // Save the directory found, to use it for the next fileDialog
+                lastDirectory = Path.GetDirectoryName(fileDialog.FileName);
+
                 // Save selected file's path
                 signalOneFile = fileDialog.FileName;
 
@@ -79,13 +107,25 @@ namespace CorrelationDataMiner
             OpenFileDialog fileDialog = new OpenFileDialog()
             {
                 Title = "Select Signal 2 File...",
-                Filter = "TXT Files|*.txt",
-                InitialDirectory = @"C:\"
+                Filter = "TXT Files|*.txt"
             };
+
+            // Check if there is a value set for lastDirectory (ie. a different file has been selected)
+            if (lastDirectory != "")
+            {
+                fileDialog.InitialDirectory = lastDirectory;
+            }
+            else
+            {
+                fileDialog.InitialDirectory = @"C:\";
+            }
 
             // Display fileDialog and check if user selected a file
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
+                // Save the directory found, to use it for the next fileDialog
+                lastDirectory = Path.GetDirectoryName(fileDialog.FileName);
+
                 // Save selected file's path
                 signalTwoFile = fileDialog.FileName;
 
@@ -117,6 +157,9 @@ namespace CorrelationDataMiner
 
                 // Calculate Intervals
                 CalculateIntervals();
+
+                // Output Intervals to Excel spreadsheet
+                OutputIntervals();
             }
 
         }
@@ -350,6 +393,146 @@ namespace CorrelationDataMiner
 
             } while (firstIndex < framesList.Count);
 
+        }
+
+        // Output Intervals to separate file
+        private void OutputIntervals()
+        {
+            // Create Excel Application
+            Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
+
+            // Check if the current system has Excel installed on it
+            if (xlApp == null)
+            {
+                MessageBox.Show("Microsoft Excel is not properly installed on your current system.\n\nOutput file will be .txt", "Microsoft Excel Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                // Write to .txt file
+                OutputTXTFile();
+            }
+            else
+            {
+                MessageBox.Show("Microsoft Excel is recognized on your current system.\n\nOutput file will be .xls", "Microsoft Excel Found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Write to .xls file
+                OutputXLSFile(xlApp);
+            }
+        }
+
+        // Output to Text File
+        private void OutputTXTFile()
+        {
+            // Create SaveFileDialog object
+            SaveFileDialog saveFileDialog = new SaveFileDialog()
+            {
+                InitialDirectory = lastDirectory,
+                Title = "Save .txt File...",
+                CheckPathExists = true,
+                DefaultExt = "txt",
+                Filter = "Text File (*.txt)|*.txt|All Files (*.*)|*.*"
+            };
+
+            // Show the dialog and check if the user has selected "OK" in it
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string directoryPath = saveFileDialog.FileName;
+
+                using (StreamWriter writer = new StreamWriter(directoryPath))
+                {
+                    int intervalNumber = 1;
+
+                    writer.WriteLine("Interval".PadRight(10) + "First".PadRight(10) + "Last".PadRight(9) + "Length".PadRight(11) + "Avg Correlation".PadRight(20) + "Avg Signal One".PadRight(19) + "Avg Signal Two".PadRight(19) + "\n");
+
+                    for (int i = 0; i < intervalsList.Count; i++)
+                    {
+                        if (intervalsList[i].IntervalLength > 1)
+                        {
+                            writer.WriteLine(intervalNumber.ToString().PadRight(10) + intervalsList[i].FirstPosition.ToString().PadRight(10) + intervalsList[i].LastPosition.ToString().PadRight(9) + intervalsList[i].IntervalLength.ToString().PadRight(11) + Math.Round(intervalsList[i].AverageCorrelation, 5).ToString().PadRight(20) + Math.Round(intervalsList[i].AverageSignalOne, 5).ToString().PadRight(19) + Math.Round(intervalsList[i].AverageSignalTwo, 5).ToString().PadRight(19));
+                            intervalNumber++;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Output to Excel File
+        private void OutputXLSFile(Microsoft.Office.Interop.Excel.Application xlApp)
+        {
+            // Create a null object
+            object missValue = System.Reflection.Missing.Value;
+
+            // Create SaveFileDialog object
+            SaveFileDialog saveFileDialog = new SaveFileDialog()
+            {
+                InitialDirectory = lastDirectory,
+                Title = "Save .xls File...",
+                CheckPathExists = true,
+                DefaultExt = "xls",
+                Filter = "Excel Spreadsheet File (*.xls)|*.xls|All Files (*.*)|*.*"
+            };
+
+            // Show the dialog and check if the user has selected "OK" in it
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                // Create Workbook
+                Workbook xlWorkbook = xlApp.Workbooks.Add(missValue);
+
+                // Create Worksheet
+                Worksheet xlWorksheet = xlWorkbook.Worksheets.Item[1];
+
+                // Set initial row and column values
+                int row = 1;
+                int col = 1;
+
+                // Write table headers
+                xlWorksheet.Cells[row, col] = "Interval"; col++;
+                xlWorksheet.Cells[row, col] = "First Position"; col++;
+                xlWorksheet.Cells[row, col] = "Last Position"; col++;
+                xlWorksheet.Cells[row, col] = "Interval Length"; col++;
+                xlWorksheet.Cells[row, col] = "Avg Correlation"; col++;
+                xlWorksheet.Cells[row, col] = "Avg Signal One"; col++;
+                xlWorksheet.Cells[row, col] = "Avg Signal Two"; col = 1; row++;
+
+                // Create variable for interval number
+                int intervalNumber = 1;
+
+                // Loop through intervalsList and display each line that has a length > 1
+                for (int i = 0; i < intervalsList.Count; i++)
+                {
+                    if (intervalsList[i].IntervalLength > 1)
+                    {
+                        xlWorksheet.Cells[row, col] = intervalNumber++; col++;
+                        xlWorksheet.Cells[row, col] = intervalsList[i].FirstPosition; col++;
+                        xlWorksheet.Cells[row, col] = intervalsList[i].LastPosition; col++;
+                        xlWorksheet.Cells[row, col] = intervalsList[i].IntervalLength; col++;
+                        xlWorksheet.Cells[row, col] = Math.Round(intervalsList[i].AverageCorrelation, 5); col++;
+                        xlWorksheet.Cells[row, col] = Math.Round(intervalsList[i].AverageSignalOne, 5); col++;
+                        xlWorksheet.Cells[row, col] = Math.Round(intervalsList[i].AverageSignalTwo, 5); col = 1; row++;
+                    }
+                }
+
+                // Save Workbook
+                xlWorkbook.SaveAs(saveFileDialog.FileName, XlFileFormat.xlWorkbookNormal, missValue, missValue, missValue, missValue, XlSaveAsAccessMode.xlExclusive, missValue, missValue, missValue, missValue, missValue);
+
+                // Close Workbook
+                xlWorkbook.Close(true, missValue, missValue);
+
+                // Quit out of xlApp
+                xlApp.Quit();
+
+                // Clean up
+                Marshal.ReleaseComObject(xlWorksheet);
+                Marshal.ReleaseComObject(xlWorkbook);
+                Marshal.ReleaseComObject(xlApp);
+
+                // Save Successful Message
+                MessageBox.Show("Your results have been successfully saved as an Excel Spreadsheet document in the selected directory!", "Excel Spreadsheet Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                // No Save File Selected Message
+                MessageBox.Show("You must select a path and filename to save your results as.\nPlease run the test again and make an appropriate selection when prompted to save file.", "No Save File Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            
         }
 
     }
