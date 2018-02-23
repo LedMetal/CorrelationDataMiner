@@ -96,33 +96,31 @@ namespace CorrelationDataMiner
 
         private void btnCalculateIntervals_Click(object sender, EventArgs e)
         {
-            //// Check if any file was left un-selected or any percentile left without an input
-            //if ((tbCorrPath.Text == String.Empty) || (tbSig1Path.Text == String.Empty) || (tbSig2Path.Text == String.Empty))
-            //{
-            //    MessageBox.Show("Please make sure to select all three files using the corresponding 'Browse' button", "Missing File(s)", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //}
-            //else if ((nudCorrelation.Value == 0) || (nudSignalOne.Value == 0) || (nudSignalTwo.Value == 0))
-            //{
-            //    MessageBox.Show("Please input a top percentile value for each data file", "Missing Field", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //}
-            //else
-            //{
-            //    // Read files into global frames list
-            //    ReadFiles();
+            // Check if any file was left un-selected or any percentile left without an input
+            if ((tbCorrPath.Text == String.Empty) || (tbSig1Path.Text == String.Empty) || (tbSig2Path.Text == String.Empty))
+            {
+                MessageBox.Show("Please make sure to select all three files using the corresponding 'Browse' button", "Missing File(s)", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else if ((nudCorrelation.Value == 0) || (nudSignalOne.Value == 0) || (nudSignalTwo.Value == 0))
+            {
+                MessageBox.Show("Please input a top percentile value for each data file", "Missing Field", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                // Read files into global frames list
+                ReadFiles();
 
-            //    // Flag frames that meet correlation, signal one and signal two requirements
-            //    SetCorrelationRequirement();
-            //    SetSignalOneRequirement();
-            //    SetSignalTwoRequirement();
+                // Flag frames that meet correlation, signal one and signal two requirements
+                SetCorrelationRequirement();
+                SetSignalOneRequirement();
+                SetSignalTwoRequirement();
 
-            //    // Calculate Intervals
-            //    CalculateIntervals();
+                // Calculate Intervals
+                CalculateIntervals();
 
-            //    // Output Intervals to Excel spreadsheet
-            //    OutputIntervals();
-            //}
-
-            OutputTXTFile();
+                // Output Intervals to Excel spreadsheet
+                OutputTXTFile();
+            }
 
         }
 
@@ -407,7 +405,7 @@ namespace CorrelationDataMiner
                     for (int i = 0; i < intervalsList.Count; i++)
                     {
                         temp = i + 1;
-                        writer.WriteLine(temp.ToString().PadRight(10) + intervalsList[i].FirstPosition.ToString().PadRight(10) + intervalsList[i].LastPosition.ToString().PadRight(9) + intervalsList[i].IntervalLength.ToString().PadRight(11));
+                        writer.WriteLine(temp.ToString().PadRight(10) + intervalsList[i].FirstPosition.ToString().PadRight(10) + intervalsList[i].LastPosition.ToString().PadRight(9) + intervalsList[i].IntervalLength.ToString().PadRight(11) + intervalsList[i].AverageCorrelation.ToString().PadRight(20) + intervalsList[i].AverageSignalOne.ToString().PadRight(19) + intervalsList[i].AverageSignalTwo.ToString().PadRight(19));
                     }
                 }
             }
