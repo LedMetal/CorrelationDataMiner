@@ -489,12 +489,15 @@ namespace CorrelationDataMiner
                 xlWorksheet.Cells[row, col] = "Avg Signal One"; col++;
                 xlWorksheet.Cells[row, col] = "Avg Signal Two"; col = 1; row++;
 
+                // Create variable for interval number
+                int intervalNumber = 1;
+
                 // Loop through intervalsList and display each line that has a length > 1
                 for (int i = 0; i < intervalsList.Count; i++)
                 {
                     if (intervalsList[i].IntervalLength > 1)
                     {
-                        xlWorksheet.Cells[row, col] = i + 1; col++;
+                        xlWorksheet.Cells[row, col] = intervalNumber++; col++;
                         xlWorksheet.Cells[row, col] = intervalsList[i].FirstPosition; col++;
                         xlWorksheet.Cells[row, col] = intervalsList[i].LastPosition; col++;
                         xlWorksheet.Cells[row, col] = intervalsList[i].IntervalLength; col++;
