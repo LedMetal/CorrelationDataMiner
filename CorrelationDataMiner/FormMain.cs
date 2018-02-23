@@ -424,7 +424,7 @@ namespace CorrelationDataMiner
             // Create SaveFileDialog object
             SaveFileDialog saveFileDialog = new SaveFileDialog()
             {
-                InitialDirectory = "C:\\",
+                InitialDirectory = lastDirectory,
                 Title = "Save .txt File...",
                 CheckPathExists = true,
                 DefaultExt = "txt",
@@ -526,7 +526,6 @@ namespace CorrelationDataMiner
                 // No Save File Selected Message
                 MessageBox.Show("You must select a path and filename to save your results as.\nPlease run the test again and make an appropriate selection when prompted to save file.", "No Save File Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-
             
         }
 
