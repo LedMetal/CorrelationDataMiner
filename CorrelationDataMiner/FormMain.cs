@@ -438,14 +438,17 @@ namespace CorrelationDataMiner
 
                 using (StreamWriter writer = new StreamWriter(directoryPath))
                 {
-                    int temp = 0;
+                    int intervalNumber = 1;
 
                     writer.WriteLine("Interval".PadRight(10) + "First".PadRight(10) + "Last".PadRight(9) + "Length".PadRight(11) + "Avg Correlation".PadRight(20) + "Avg Signal One".PadRight(19) + "Avg Signal Two".PadRight(19) + "\n");
 
                     for (int i = 0; i < intervalsList.Count; i++)
                     {
-                        temp = i + 1;
-                        writer.WriteLine(temp.ToString().PadRight(10) + intervalsList[i].FirstPosition.ToString().PadRight(10) + intervalsList[i].LastPosition.ToString().PadRight(9) + intervalsList[i].IntervalLength.ToString().PadRight(11) + Math.Round(intervalsList[i].AverageCorrelation, 5).ToString().PadRight(20) + Math.Round(intervalsList[i].AverageSignalOne, 5).ToString().PadRight(19) + Math.Round(intervalsList[i].AverageSignalTwo, 5).ToString().PadRight(19));
+                        if (intervalsList[i].IntervalLength > 1)
+                        {
+                            writer.WriteLine(intervalNumber.ToString().PadRight(10) + intervalsList[i].FirstPosition.ToString().PadRight(10) + intervalsList[i].LastPosition.ToString().PadRight(9) + intervalsList[i].IntervalLength.ToString().PadRight(11) + Math.Round(intervalsList[i].AverageCorrelation, 5).ToString().PadRight(20) + Math.Round(intervalsList[i].AverageSignalOne, 5).ToString().PadRight(19) + Math.Round(intervalsList[i].AverageSignalTwo, 5).ToString().PadRight(19));
+                            intervalNumber++;
+                        }
                     }
                 }
             }
