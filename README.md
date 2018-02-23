@@ -20,4 +20,4 @@ Human movement data collected using *Correlation Map Analysis* (Adriano et al., 
 This project is licensed under the MIT License - see the LICENSE.md file for details
 
 ### Acknowledgments
-[**Nida Latif**] - Thank you for allowing my inclusion in your research!
+[**Nida Latif**](https://nlatif.wordpress.com/) - Thank you for allowing my inclusion in your research!
