@@ -405,7 +405,7 @@ namespace CorrelationDataMiner
                     for (int i = 0; i < intervalsList.Count; i++)
                     {
                         temp = i + 1;
-                        writer.WriteLine(temp.ToString().PadRight(10) + intervalsList[i].FirstPosition.ToString().PadRight(10) + intervalsList[i].LastPosition.ToString().PadRight(9) + intervalsList[i].IntervalLength.ToString().PadRight(11) + intervalsList[i].AverageCorrelation.ToString().PadRight(20) + intervalsList[i].AverageSignalOne.ToString().PadRight(19) + intervalsList[i].AverageSignalTwo.ToString().PadRight(19));
+                        writer.WriteLine(temp.ToString().PadRight(10) + intervalsList[i].FirstPosition.ToString().PadRight(10) + intervalsList[i].LastPosition.ToString().PadRight(9) + intervalsList[i].IntervalLength.ToString().PadRight(11) + Math.Round(intervalsList[i].AverageCorrelation, 5).ToString().PadRight(20) + Math.Round(intervalsList[i].AverageSignalOne, 5).ToString().PadRight(19) + Math.Round(intervalsList[i].AverageSignalTwo, 5).ToString().PadRight(19));
                     }
                 }
             }
