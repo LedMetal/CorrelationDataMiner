@@ -69,6 +69,7 @@
             this.btnExit.TabIndex = 41;
             this.btnExit.Text = "Exit";
             this.btnExit.UseVisualStyleBackColor = false;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // btnCalculateIntervals
             // 
