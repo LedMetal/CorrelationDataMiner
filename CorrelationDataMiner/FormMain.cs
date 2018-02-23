@@ -134,6 +134,17 @@ namespace CorrelationDataMiner
             }
         }
 
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            // Exit Confirmation
+            DialogResult diagResult = MessageBox.Show("Are you sure you want to exit the application?", "Exit Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (diagResult == DialogResult.Yes)
+            {
+                System.Windows.Forms.Application.Exit();
+            }
+        }
+
         private void btnCalculateIntervals_Click(object sender, EventArgs e)
         {
             // Check if any file was left un-selected or any percentile left without an input
