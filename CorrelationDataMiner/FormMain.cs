@@ -16,6 +16,7 @@ namespace CorrelationDataMiner
     {
         // Global Variables
         string correlationFile, signalOneFile, signalTwoFile;
+        string lastDirectory;
         List<Frame> framesList;
         List<Interval> intervalsList;
 
@@ -29,6 +30,7 @@ namespace CorrelationDataMiner
             signalTwoFile = "";
             framesList = new List<Frame>();
             intervalsList = new List<Interval>();
+            lastDirectory = "";
         }
 
         private void btnBrowseCorr_Click(object sender, EventArgs e)
@@ -37,13 +39,25 @@ namespace CorrelationDataMiner
             OpenFileDialog fileDialog = new OpenFileDialog()
             {
                 Title = "Select Correlation File...",
-                Filter = "TXT Files|*.txt",
-                InitialDirectory = @"C:\"
+                Filter = "TXT Files|*.txt"
             };
+
+            // Check if there is a value set for lastDirectory (ie. a different file has been selected)
+            if (lastDirectory != "")
+            {
+                fileDialog.InitialDirectory = lastDirectory;
+            }
+            else
+            {
+                fileDialog.InitialDirectory = @"C:\";
+            }
 
             // Display fileDialog and check if user selected a file
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
+                // Save the directory found, to use it for the next fileDialog
+                lastDirectory = Path.GetDirectoryName(fileDialog.FileName);
+
                 // Save selected file's path
                 correlationFile = fileDialog.FileName;
 
@@ -58,13 +72,25 @@ namespace CorrelationDataMiner
             OpenFileDialog fileDialog = new OpenFileDialog()
             {
                 Title = "Select Signal 1 File...",
-                Filter = "TXT Files|*.txt",
-                InitialDirectory = @"C:\"
+                Filter = "TXT Files|*.txt"
             };
+
+            // Check if there is a value set for lastDirectory (ie. a different file has been selected)
+            if (lastDirectory != "")
+            {
+                fileDialog.InitialDirectory = lastDirectory;
+            }
+            else
+            {
+                fileDialog.InitialDirectory = @"C:\";
+            }
 
             // Display fileDialog and check if user selected a file
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
+                // Save the directory found, to use it for the next fileDialog
+                lastDirectory = Path.GetDirectoryName(fileDialog.FileName);
+
                 // Save selected file's path
                 signalOneFile = fileDialog.FileName;
 
@@ -79,13 +105,25 @@ namespace CorrelationDataMiner
             OpenFileDialog fileDialog = new OpenFileDialog()
             {
                 Title = "Select Signal 2 File...",
-                Filter = "TXT Files|*.txt",
-                InitialDirectory = @"C:\"
+                Filter = "TXT Files|*.txt"
             };
+
+            // Check if there is a value set for lastDirectory (ie. a different file has been selected)
+            if (lastDirectory != "")
+            {
+                fileDialog.InitialDirectory = lastDirectory;
+            }
+            else
+            {
+                fileDialog.InitialDirectory = @"C:\";
+            }
 
             // Display fileDialog and check if user selected a file
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
+                // Save the directory found, to use it for the next fileDialog
+                lastDirectory = Path.GetDirectoryName(fileDialog.FileName);
+
                 // Save selected file's path
                 signalTwoFile = fileDialog.FileName;
 
