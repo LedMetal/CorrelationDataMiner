@@ -1,4 +1,5 @@
 ﻿using CorrelationDataMiner.bus;
+using Microsoft.Office.Interop.Excel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -157,7 +159,7 @@ namespace CorrelationDataMiner
                 CalculateIntervals();
 
                 // Output Intervals to Excel spreadsheet
-                OutputTXTFile();
+                OutputIntervals();
             }
 
         }
@@ -412,7 +414,7 @@ namespace CorrelationDataMiner
                 MessageBox.Show("Microsoft Excel is recognized on your current system.\n\nOutput file will be .xls", "Microsoft Excel Found", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Write to .xls file
-                OutputXLSFile();
+                OutputXLSFile(xlApp);
             }
         }
 
@@ -450,9 +452,33 @@ namespace CorrelationDataMiner
         }
 
         // Output to Excel File
-        private void OutputXLSFile()
+        private void OutputXLSFile(Microsoft.Office.Interop.Excel.Application xlApp)
         {
+            object missValue = System.Reflection.Missing.Value;
 
+            // Create Workbook
+            Workbook xlWorkbook = xlApp.Workbooks.Add(missValue);
+
+            // Create Worksheet
+            Worksheet xlWorksheet = xlWorkbook.Worksheets.Item[1];
+            xlWorksheet.Cells[3, 2] = "32";
+            xlWorksheet.Cells[2, 3] = "23";
+
+            // Save Workbook
+            xlWorkbook.SaveAs(lastDirectory + "\\results.xls", XlFileFormat.xlWorkbookNormal, missValue, missValue, missValue, missValue, XlSaveAsAccessMode.xlExclusive, missValue, missValue, missValue, missValue, missValue);
+
+            // Close Workbook
+            xlWorkbook.Close(true, missValue, missValue);
+
+            // Quit out of xlApp
+            xlApp.Quit();
+
+            // Clean up
+            Marshal.ReleaseComObject(xlWorksheet);
+            Marshal.ReleaseComObject(xlWorkbook);
+            Marshal.ReleaseComObject(xlApp);
+
+            MessageBox.Show("DONE");
         }
 
     }
