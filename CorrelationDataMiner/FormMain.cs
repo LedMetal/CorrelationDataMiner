@@ -429,7 +429,7 @@ namespace CorrelationDataMiner
                 CheckPathExists = true,
                 DefaultExt = "txt",
                 Filter = "Text File (*.txt)|*.txt|All Files (*.*)|*.*"
-        };
+            };
 
             // Show the dialog and check if the user has selected "OK" in it
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
@@ -454,31 +454,54 @@ namespace CorrelationDataMiner
         // Output to Excel File
         private void OutputXLSFile(Microsoft.Office.Interop.Excel.Application xlApp)
         {
+            // Create a null object
             object missValue = System.Reflection.Missing.Value;
 
-            // Create Workbook
-            Workbook xlWorkbook = xlApp.Workbooks.Add(missValue);
+            // Create SaveFileDialog object
+            SaveFileDialog saveFileDialog = new SaveFileDialog()
+            {
+                InitialDirectory = lastDirectory,
+                Title = "Save .xls File...",
+                CheckPathExists = true,
+                DefaultExt = "xls",
+                Filter = "Excel Spreadsheet File (*.xls)|*.xls|All Files (*.*)|*.*"
+            };
 
-            // Create Worksheet
-            Worksheet xlWorksheet = xlWorkbook.Worksheets.Item[1];
-            xlWorksheet.Cells[3, 2] = "32";
-            xlWorksheet.Cells[2, 3] = "23";
+            // Show the dialog and check if the user has selected "OK" in it
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                // Create Workbook
+                Workbook xlWorkbook = xlApp.Workbooks.Add(missValue);
 
-            // Save Workbook
-            xlWorkbook.SaveAs(lastDirectory + "\\results.xls", XlFileFormat.xlWorkbookNormal, missValue, missValue, missValue, missValue, XlSaveAsAccessMode.xlExclusive, missValue, missValue, missValue, missValue, missValue);
+                // Create Worksheet
+                Worksheet xlWorksheet = xlWorkbook.Worksheets.Item[1];
+                xlWorksheet.Cells[3, 2] = "32";
+                xlWorksheet.Cells[2, 3] = "23";
 
-            // Close Workbook
-            xlWorkbook.Close(true, missValue, missValue);
+                // Save Workbook
+                xlWorkbook.SaveAs(saveFileDialog.FileName, XlFileFormat.xlWorkbookNormal, missValue, missValue, missValue, missValue, XlSaveAsAccessMode.xlExclusive, missValue, missValue, missValue, missValue, missValue);
 
-            // Quit out of xlApp
-            xlApp.Quit();
+                // Close Workbook
+                xlWorkbook.Close(true, missValue, missValue);
 
-            // Clean up
-            Marshal.ReleaseComObject(xlWorksheet);
-            Marshal.ReleaseComObject(xlWorkbook);
-            Marshal.ReleaseComObject(xlApp);
+                // Quit out of xlApp
+                xlApp.Quit();
 
-            MessageBox.Show("DONE");
+                // Clean up
+                Marshal.ReleaseComObject(xlWorksheet);
+                Marshal.ReleaseComObject(xlWorkbook);
+                Marshal.ReleaseComObject(xlApp);
+
+                // Save Successful Message
+                MessageBox.Show("Your results have been successfully saved as an Excel Spreadsheet document in the selected directory!", "Excel Spreadsheet Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                // No Save File Selected Message
+                MessageBox.Show("You must select a path and filename to save your results as.\nPlease run the test again and make an appropriate selection when prompted to save file.", "No Save File Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            
         }
 
     }
